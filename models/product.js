@@ -6,5 +6,5 @@ const productSchema = new mongoose.Schema({
   owner: {type: mongoose.Schema.Types.ObjectId, ref: "user"},
 });
 
-const User = mongoose.model("user", userSchema);
-module.exports = User;
+const Product = mongoose.model("product", productSchema);
+module.exports = Product;

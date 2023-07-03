@@ -1,10 +1,13 @@
 const express = require("express");
 require("dotenv/config");
 require("./db");
+const bodyParser = require('body-parser')
 const cors = require("cors");
-//
-//const userRouter = require("./routes/users");
-//const propertyRouter = require("./routes/properties");
+///////////////
+//REQUIRE ROUTERS
+const userRouter = require("./routes/users");
+const imgRouter = require("./routes/productImages");
+const productRouter = require("./routes/products");
 //
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,13 +18,16 @@ app.use(
     origin: "http://localhost:5173",
   })
 );
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 app.use(express.json());
-/////////
-//ROUTES
-//app.use("/users", userRouter);
-//app.use("/properties", propertyRouter);
+//////////////
+//USING ROUTES
+app.use("/users", userRouter);
+app.use("/products/images", imgRouter);
+app.use("/products", productRouter);
 
 app.listen(PORT, () => {
-  console.log(`Real Estate App is Listening on http://localhost:${PORT}`);
+  console.log(`Image Uploader App is Listening on http://localhost:${PORT}`);
 });
