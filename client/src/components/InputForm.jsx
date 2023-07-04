@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 export default function InputForm() {
-  const [productData, setProductData] = useState("")
-  const [uploadSuccess, setUploadSuccess] = useState("")
+  const [productData, setProductData] = useState("");
+  const [uploadSuccess, setUploadSuccess] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,40 +18,15 @@ export default function InputForm() {
 
   const handleFormSubmit = (data) => {
     const formData = new FormData();
+    formData.append("product-img", data.image[0]);
     formData.append("name", data.name);
     formData.append("price", data.price);
-    formData.append("product-img", data.image[0]);
-
+    formData.append("owner", data.owner);
 
     axios
-      .post(
-        "http://localhost:3000/products/images/upload-product-img",
-        formData
-      )
+      .post("http://localhost:3000/products", formData)
       .then((response) => {
-        setUploadSuccess(response.data)
         console.log("Added new image successfully:", response.data);
-
-        
-        axios
-      .post("http://localhost:3000/products", {
-        "name":
-        `${data.name}`,
-        "price":
-        `${data.price}`,
-        "image":
-        "https://example.com/image43.jpg",
-        "owner":
-        `${data.owner}`})
-      .then((response) => {
-        console.log("Added new product successfully:", response.data);
-        reset();
-        navigate(`/`);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
         reset();
         navigate(`/`);
       })
@@ -109,13 +84,10 @@ export default function InputForm() {
             />
             {errors.owner && <span>{errors.owner.message}</span>}
           </div>
-          
 
           <input className="submit-button" type="submit" value={"Submit"} />
         </form>
-        <div>
-          {uploadSuccess}
-        </div>
+        <div>{uploadSuccess}</div>
       </div>
     </>
   );

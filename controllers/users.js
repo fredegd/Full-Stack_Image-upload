@@ -3,15 +3,15 @@ const User = require("../models/user");
 const createUser = async (req, res) => {
   try {
     const {
-      body: { email, name},
+      body: { email, name },
     } = req;
     const user = await User.create({ email, name });
+
     res.status(201).json(user);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send("something went wrong", err.message);
   }
 };
-
 
 const getUser = async (req, res) => {
   try {
@@ -27,14 +27,14 @@ const getUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-    try {
-      const users = await User.find({});
-      res.json(users);
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
-  };
-  
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
 const updateUser = async (req, res) => {
   try {
     const {

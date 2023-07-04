@@ -2,16 +2,20 @@ const Product = require("../models/product");
 
 const createProduct = async (req, res) => {
   try {
-    const {
-      body: { name, price,image,owner},
-    } = req;
-    const product = await Product.create({ name, price,image,owner });
+    const { name, price, owner } = req.body;
+    const product = await Product.create({
+      name,
+      price,
+      image: req.file.filename,
+      owner,
+    });
+
     res.status(201).json(product);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err.message);
   }
 };
-
 
 const getProduct = async (req, res) => {
   try {
@@ -19,9 +23,7 @@ const getProduct = async (req, res) => {
       params: { id },
     } = req;
 
-    const product = await Product.findById(id).populate(
-        "owner","name email"
-    );
+    const product = await Product.findById(id).populate("owner", "name email");
     res.json(product);
   } catch (err) {
     res.status(500).send(err.message);
@@ -29,14 +31,14 @@ const getProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-    try {
-      const products = await Product.find({});
-      res.json(products);
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
-  };
-  
+  try {
+    const products = await Product.find({});
+    res.json(products);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
 const updateProduct = async (req, res) => {
   try {
     const {
