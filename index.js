@@ -1,8 +1,8 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv/config");
 require("./db");
 const bodyParser = require('body-parser')
-const cors = require("cors");
 ///////////////
 //REQUIRE ROUTERS
 const userRouter = require("./routes/users");
@@ -13,11 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 /////////////
 //MIDDLEWARES
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));

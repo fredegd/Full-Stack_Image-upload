@@ -7,8 +7,10 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/users");
+
 ///Create the Router
 const userRouter = express.Router();
+
 ///CRUD Operations
 userRouter.post("/", createUser);
 userRouter.get("/", getUsers);

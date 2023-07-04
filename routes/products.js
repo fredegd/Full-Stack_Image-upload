@@ -11,9 +11,12 @@ const {
 const productRouter = express.Router();
 ///CRUD Operations
 productRouter.post("/", createProduct);
+
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);
+
 productRouter.put("/:id", updateProduct);
+
 productRouter.delete("/:id", deleteProduct);
 
 module.exports = productRouter;
